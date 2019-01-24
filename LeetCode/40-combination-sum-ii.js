@@ -43,25 +43,31 @@ var combinationSum = function(candidates, target) {
 };
 
 function findSubsetThatSums(candidates, target, finalResult, currentSet) {
+  console.log(currentSet);
   let currentSetSum = currentSet.length > 0 ? currentSet.reduce((total, num)=> {return total + num}) : 0;
   if(currentSetSum == target ) {
+    console.log("****");
     finalResult.push(currentSet.slice(0));
   } else if (currentSetSum > target) {
     return;
   } else {
     for(let i=0;i<candidates.length; i++) {
       if(i>0 && candidates[i]==candidates[i-1]){
-        //i++;
         continue;
       }
       currentSet.push(candidates[i]);
       let newCandidates = candidates.slice(i+1);
       findSubsetThatSums(newCandidates, target, finalResult, currentSet);
+      let currentSetSum = currentSet.length > 0 ? currentSet.reduce((total, num)=> {return total + num}) : 0;
       currentSet.pop(candidates[i]);
+
+      if(currentSetSum >= target ) {
+        break;
+      }
     }
   }
 }
 
 //console.log(combinationSum([2,5,2,1,2],5));
-//console.log(combinationSum([10,1,2,7,6,1,5],8));
-console.log(combinationSum([2,2,2],2));
+console.log(combinationSum([10,1,2,7,6,1,5],8));
+//console.log(combinationSum([2,2,2],2));
